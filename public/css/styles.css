@@ -1,0 +1,42 @@
+/* Imports */
+
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+/* Basic Styles */
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    text-align: center;
+    margin: auto;
+}
+
+h2 {
+    font-family: 'Lato', sans-serif;
+    font-weight: normal;
+    font-size: 50px;
+}
+
+button {
+    margin-top: 10px;
+    border: none;
+    background-color: darkturquoise;
+    color: white;
+    padding: 15px 32px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+#weather {
+    margin-top: 50px;
+    font-size: 20px;
+}
+
+#footer {
+    margin-top: 350px;
+}

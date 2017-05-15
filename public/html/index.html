@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Massless Technologies</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
+    <h2>Lets get your weather!</h2>
+    <button onclick="getLocation()">Get weather</button>
+    <p id="weather"></p>
+
+    <section id="footer">
+        Created by Muhammad Awais Qureshi
+    </section>
+
+    <script>
+        /**
+         *  Variables
+         **/
+        let weather = document.getElementById('weather')
+        let latitude = 0,
+            longitude = 0
+
+        /**
+         * 
+         *  Function to get the location from the browser, and populate the #weather.
+         *      - Consumes the promise and poulates #weather based on result
+         * 
+         **/
+        function getLocation() {
+            if (navigator.geolocation) {
+                position = navigator.geolocation.getCurrentPosition((position) => {
+                    longitude = position.coords.longitude
+                    latitude = position.coords.latitude
+
+                    // call the get weather function
+                    getWeather('/weather', latitude, longitude)
+                        .then(json => JSON.parse(json))
+                        .then(data => {
+                            weather.innerHTML = `
+                                The current weather at Latitude: ${data.coord.lat} & Longitude: ${data.coord.lon} (${data.name}, ${data.sys.country}) is ${data.main.temp}&deg;C
+                            `
+                        })
+                        .catch(err => console.log(err))
+                })
+            } else
+                weather.innerHTML = 'Turn on geolocation!'
+        }
+
+        /**
+         * 
+         *  Function to get the weather from the express back-end, via a XMLHttpRequest
+         *  @param: url => endpoint to get weather from
+         *  @return: Promise with error or result
+         * 
+         **/
+        function getWeather(url, lat, long) {
+            return new Promise((resolve, reject) => {
+                let xhr = new XMLHttpRequest()
+                xhr.open('POST', url, true)
+                xhr.onload = function() {
+                    if (this.status >= 200 && this.status < 300)
+                        resolve(xhr.response)
+                    else {
+                        reject({
+                            status: this.status,
+                            statusText: this.statusText
+                        })
+                    }
+                }
+                xhr.onerror = () => {
+                    reject({
+                        status: this.status,
+                        statusText: this.statusText
+                    })
+                }
+
+                // send data onto the endpoint
+                xhr.setRequestHeader('Content-Type', 'application/json')
+                xhr.send(JSON.stringify({
+                    latitude: lat,
+                    longitude: long
+                }))
+            })
+        }
+    </script>
+</body>
+
+</html>
