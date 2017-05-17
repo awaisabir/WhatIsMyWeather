@@ -12,14 +12,14 @@ let latitude = 0,
  **/
 function getLocation() {
     if (navigator.geolocation) {
-        weahter.innerHTML = '';
+        weather.innerHTML = '';
         // if geolocation enabled, then get the current co-ordinates
         position = navigator.geolocation.getCurrentPosition((position) => {
             longitude = position.coords.longitude
             latitude = position.coords.latitude
 
             // call the get weather function & evaluate the promise
-            getWeather('https://awais-whatismyweather.herokuapp.com/weather', latitude, longitude)
+            getWeather('/weather', latitude, longitude)
                 .then(data => {
                     weather.innerHTML = `
                                     The current weather at Latitude: ${data.coord.lat} & Longitude: ${data.coord.lon} (${data.name}, ${data.sys.country}) is ${data.main.temp}&deg;C
