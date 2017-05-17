@@ -9,6 +9,6 @@ A simple app which tells you your weather in real-time.
   - Javascript (ES6)
   - Openweather API
 
-You can test the app out [here](https://awais-whatismyweather.herokuapp.com)
+Go ahead and clone it. Try making it better!
 
 ### Created by Muhammad Awais Qureshi
