@@ -7,7 +7,7 @@ A simple app which tells you your weather in real-time.
   - Babel
   - HTML5 Geolocation
   - Javascript (ES6)
-  - Openweather API
+  - OpenweatherMap API
 
 Go ahead and clone it. Try making it better!
 
