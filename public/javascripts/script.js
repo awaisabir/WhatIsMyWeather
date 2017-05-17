@@ -19,7 +19,7 @@ function getLocation() {
             latitude = position.coords.latitude
 
             // call the get weather function & evaluate the promise
-            getWeather('/weather', latitude, longitude)
+            getWeather('https://awais-whatismyweather.herokuapp.com/weather', latitude, longitude)
                 .then(data => {
                     weather.innerHTML = `
                                     The current weather at Latitude: ${data.coord.lat} & Longitude: ${data.coord.lon} (${data.name}, ${data.sys.country}) is ${data.main.temp}&deg;C
