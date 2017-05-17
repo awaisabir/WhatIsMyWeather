@@ -1,7 +1,7 @@
 {
     "name": "test",
     "version": "1.0.0",
-    "description": "My Full Stack Developer Application for Massless Technologies",
+    "description": "An app which gives the weather in your location",
     "main": "server.js",
     "author": "Muhammad Awais Qureshi",
     "license": "MIT",
