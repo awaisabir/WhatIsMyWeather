@@ -7,7 +7,7 @@ import CONFIG from './config/opeanweathermap'
 
 // app stuff
 const app = express()
-const PORT = 3000 || process.env.PORT
+const PORT = process.env.PORT || 3000
 
 // get API KEY
 const API_KEY = CONFIG.API_KEY
