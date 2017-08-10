@@ -36,6 +36,16 @@ app.post('/weather', (req, res, next) => {
 
 })
 
+app.get('/forecast/:lat/:lon', (req, res, next) => {
+    
+    let { lat, lon } = req.params
+
+    rp(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`)
+        .then(response => JSON.parse(response))
+        .then(data => res.json(data))
+        .catch(err => console.log(err))
+})
+
 // fire up server
 app.listen(PORT, err => {
     if (err) return console.error(err)

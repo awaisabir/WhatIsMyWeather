@@ -76,6 +76,23 @@ function getWeather(url, lat, long) {
     })
 }
 
+function getForecast(lat, long) {
+    if (navigator.geolocation) {
+        weather.innerHTML = '';
+        // if geolocation enabled, then get the current co-ordinates
+        position = navigator.geolocation.getCurrentPosition((position) => {
+            longitude = position.coords.longitude
+            latitude = position.coords.latitude
+
+            fetch(`/forecast/${latitude}/${longitude}`)
+                .then(response => response.json())
+                .then(json => console.log(json))
+                .catch(err => console.log(err))
+        })
+    } else
+        weather.innerHTML = 'Turn on geolocation!'
+}
+
 
 function initMap(lat, lng) {
     if (!lat || !lng) {
