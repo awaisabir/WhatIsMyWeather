@@ -1,4 +1,4 @@
-![WhatIsMyWeather?](https://github.com/awaisabir/WhatIsMyWeather/app.png)
+[](https://github.com/awaisabir/WhatIsMyWeather/blob/master/app.png)
 
 # What's your current weather? ..
 
