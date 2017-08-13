@@ -1,14 +1,19 @@
+![WhatIsMyWeather?](https://github.com/awaisabir/WhatIsMyWeather/app.png)
+
 # What's your current weather? ..
 
-A simple app which tells you your weather in real-time.
+A simple app which tells you your weather or 5-day forecast.
 
 ## Technologies used
-  - Express/Node (ES6)
+  - ExpressJS
   - Babel
   - HTML5 Geolocation
   - Javascript (ES6)
+  - Google Maps API
   - OpenweatherMap API
+  - Bulma
 
-Go ahead and clone it. Try making it better!
+## Current Status
+Under Construction :zap:
 
-### Created by Muhammad Awais Qureshi
+### Created by [@awaisabir](https://github.com/awaisabir)
