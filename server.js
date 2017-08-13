@@ -19,7 +19,7 @@ app.use(express.static(__dirname + '/public'))
 
 // default route
 app.get('/', (req, res, next) => {
-    res.sendFile(path.join(__dirname + '/public/html/index.html'))
+    res.sendFile(path.join(__dirname + '/views/index.html'))
 })
 
 // weather endpoint
