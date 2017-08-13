@@ -10,26 +10,68 @@ let latitude = 0,
  *  Purpose: Function to get the location from the browser, and populate the #weather.
  *               - Consumes the promise and poulates #weather based on result 
  **/
-function getLocation() {
-    if (navigator.geolocation) {
-        weather.innerHTML = '';
-        // if geolocation enabled, then get the current co-ordinates
-        position = navigator.geolocation.getCurrentPosition((position) => {
-            longitude = position.coords.longitude
-            latitude = position.coords.latitude
+function getCurrentWeather() {
+    getLocation().then(coords => {
+        weather.innerHTML = ''
+        let {latitude, longitude} = coords
+        fetch(`/weather`, {
+            method: `POST`,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({latitude, longitude}),
+        }).then(data => {
+            weather.innerHTML = `
+                    Location: ${data.name}, ${data.sys.country}.<br/> 
+                    <h1>${data.main.temp}&deg;C </h1>
+                    <h1>${toTitleCase(data.weather[0].description)}&nbsp;<img src="http://openweathermap.org/img/w/${data.weather[0].icon}.png"/></h1>
+                `
+            initMap(data.coord.lat, data.coord.lon)
+        }).catch(err => console.log(err))
 
-            // call the get weather function & evaluate the promise
-            getWeather('/weather', latitude, longitude)
-                .then(data => {
-                    weather.innerHTML = `
-                        The current weather at your nearest location: ${data.name}, ${data.sys.country} is ${data.main.temp}&deg;C
-                    `
-                    initMap(data.coord.lat, data.coord.lon)
-                })
+
+        /* fetch(`/forecast/${coords.latitude}/${coords.longitude}`)
+                .then(response => response.json())
+                .then(json => console.log(json))
                 .catch(err => console.log(err))
-        })
-    } else
-        weather.innerHTML = 'Turn on geolocation!'
+
+        getWeather('/weather', coords.latitude, coords.longitude)
+            .then(data => {
+                weather.innerHTML = `
+                    Location: ${data.name}, ${data.sys.country}.<br/> 
+                    <h1>${data.main.temp}&deg;C </h1>
+                    <h1>${toTitleCase(data.weather[0].description)}&nbsp;<img src="http://openweathermap.org/img/w/${data.weather[0].icon}.png"/></h1>
+                `
+                initMap(data.coord.lat, data.coord.lon)
+            })
+            .catch(err => { weather.innerHTML = `Unexpected Error` })*/
+    })
+    .catch(err => { weather.innerHTML = `${err.message}` })
+}
+
+
+function getForecast(lat, long) {
+    getLocation().then(coords => {
+        fetch(`/forecast/${coords.latitude}/${coords.longitude}`)
+                .then(response => response.json())
+                .then(json => console.log(json))
+                .catch(err => console.log(err))
+    })
+    .catch(err => { weather.innerHTML = `${err.message}` })
+}
+
+function getLocation()
+{
+    return new Promise((resolve, reject) => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+            let {longitude, latitude} = position.coords
+            resolve({longitude, latitude})
+            })
+        } else {
+            reject({message: 'Turn on geo-location'})
+        }
+    })
 }
 
 /**
@@ -43,15 +85,12 @@ function getLocation() {
 function getWeather(url, lat, long) {
     return new Promise((resolve, reject) => {
 
-        // new XMLHttpRequest POST request
         let xhr = new XMLHttpRequest()
         xhr.open('POST', url, true)
         xhr.onload = function() {
-            // resolve with the parsed response
             if (this.status >= 200 && this.status < 300)
                 resolve(JSON.parse(xhr.response))
             else {
-                // reject with error
                 reject({
                     status: this.status,
                     statusText: this.statusText
@@ -59,7 +98,6 @@ function getWeather(url, lat, long) {
             }
         }
 
-        // rejet with error
         xhr.onerror = () => {
             reject({
                 status: this.status,
@@ -67,7 +105,6 @@ function getWeather(url, lat, long) {
             })
         }
 
-        // set headers and send the data onto the endpoint
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify({
             latitude: lat,
@@ -75,24 +112,6 @@ function getWeather(url, lat, long) {
         }))
     })
 }
-
-function getForecast(lat, long) {
-    if (navigator.geolocation) {
-        weather.innerHTML = '';
-        // if geolocation enabled, then get the current co-ordinates
-        position = navigator.geolocation.getCurrentPosition((position) => {
-            longitude = position.coords.longitude
-            latitude = position.coords.latitude
-
-            fetch(`/forecast/${latitude}/${longitude}`)
-                .then(response => response.json())
-                .then(json => console.log(json))
-                .catch(err => console.log(err))
-        })
-    } else
-        weather.innerHTML = 'Turn on geolocation!'
-}
-
 
 function initMap(lat, lng) {
     if (!lat || !lng) {
@@ -115,4 +134,9 @@ function initMap(lat, lng) {
         })
     }
 
+}
+
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()})
 }
