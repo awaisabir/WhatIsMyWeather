@@ -1,4 +1,4 @@
-![What's My Weather?](blob/master/app.png?raw=true "What is My Weather?")
+![What's My Weather?](app.png?raw=true "What is My Weather?")
 
 # What's your current weather? ..
 
