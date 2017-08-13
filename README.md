@@ -15,5 +15,7 @@ A simple app which tells you your weather or 5-day forecast.
 
 ## Current Status
 Under Construction :zap:
+  - Addition of 5 - day forecast display using Bulma cards
+  - Rewriting the application in ReactJS
 
 ### Created by [@awaisabir](https://github.com/awaisabir)
