@@ -21,6 +21,29 @@ button:hover {
     cursor: pointer;
 }
 
+hr {
+    background-color: #00d1b2;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    transition: 0.2s;
+}
+
+.card:hover {
+    transition: 0.4s;
+    box-shadow: 2px 2px #888888;
+}
+
+.card-header-title {
+    justify-content: center;
+}
+
 #weather {
     margin-top: 50px;
     font-size: 20px;
@@ -31,6 +54,7 @@ button:hover {
 }
 
 #map {
+    margin-top: 50px;
     width: 100%;
     height: 400px;
     background-color: grey;

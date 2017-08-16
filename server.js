@@ -23,10 +23,9 @@ app.get('/', (req, res, next) => {
 })
 
 // weather endpoint
-app.post('/weather', (req, res, next) => {
+app.get('/weather/:_lat/:_lon', (req, res, next) => {
 
-    const _lat = req.body.latitude
-    const _lon = req.body.longitude
+    const { _lat, _lon } = req.params
 
     // send a request to the OpenWeatherMap API
     rp(`http://api.openweathermap.org/data/2.5/weather?lat=${_lat}&lon=${_lon}&appid=${API_KEY}&units=metric`)
@@ -36,11 +35,11 @@ app.post('/weather', (req, res, next) => {
 
 })
 
-app.get('/forecast/:lat/:lon', (req, res, next) => {
+app.get('/forecast/:_lat/:_lon', (req, res, next) => {
     
-    let { lat, lon } = req.params
+    const { _lat, _lon } = req.params
 
-    rp(`http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`)
+    rp(`http://api.openweathermap.org/data/2.5/forecast?lat=${_lat}&lon=${_lon}&appid=${API_KEY}&units=metric`)
         .then(response => JSON.parse(response))
         .then(data => res.json(data))
         .catch(err => console.log(err))

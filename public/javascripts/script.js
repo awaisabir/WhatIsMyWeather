@@ -10,23 +10,35 @@ let latitude = 0,
  *  Purpose: Function make call to backend enpoint for current weather and populate the DOM 
  **/
 function getCurrentWeather() {
-    getLocation().then(coords => {
+    getLocation()
+    .then(coords => {
         weather.innerHTML = ''
         let {latitude, longitude} = coords
-        fetch(`/weather`, {
-            method: `POST`,
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({latitude, longitude}),
-        })
+
+        fetch(`/weather/${latitude}/${longitude}`)
         .then(response => response.json())
         .then(data => {
             weather.innerHTML = `
-                    Location: ${data.name}, ${data.sys.country}.<br/> 
-                    <h1>${data.main.temp}&deg;C </h1>
-                    <h1>${toTitleCase(data.weather[0].description)}&nbsp;<img src="http://openweathermap.org/img/w/${data.weather[0].icon}.png"/></h1>
-                `
+            <div class="container">
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            ${data.name}, ${data.sys.country}
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            <h1>${data.main.temp}&deg;C</h1>
+                            <hr/>
+                            <small>
+                                ${toTitleCase(data.weather[0].description)} <br/>
+                                <img src="http://openweathermap.org/img/w/${data.weather[0].icon}.png"/>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `
             initMap(data.coord.lat, data.coord.lon)
         }).catch(err => console.log(err))
     })
@@ -37,8 +49,9 @@ function getCurrentWeather() {
  *  Name: getForecast
  *  Purpose: Function make call to backend enpoint for 5-day forecast and populate the DOM 
  **/
-function getForecast(lat, long) {
-    getLocation().then(coords => {
+function getForecast() {
+    getLocation()
+    .then(coords => {
         fetch(`/forecast/${coords.latitude}/${coords.longitude}`)
                 .then(response => response.json())
                 .then(json => console.log(json))
