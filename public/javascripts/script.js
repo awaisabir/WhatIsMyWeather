@@ -118,6 +118,10 @@ function addSpinner() {
             <div class="double-bounce1"></div>
             <div class="double-bounce2"></div>
         </div>
+        <h2>       
+            Pinpointing your location ... 
+            <img src="images/map.svg" alt="cloud" width="25px" height="25px" />
+        </h2>
     `
 }
 
