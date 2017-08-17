@@ -6,24 +6,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 
 <body>
 
     <!--Basic Layout-->
-    <h1>Lets get your weather!</h1>
-    <div class="tabs is-centered">
-        <ul>
-            <li><a><button class="button is-primary" onclick="getCurrentWeather()">Current Weather</button></a></li>
-            <li><a><button class="button is-primary" onclick="getForecast()">5 Day Foreacast</button></a></li>
-        </ul>
+    <h1>
+        <img src="images/cloud-2.svg" alt="cloud" width="50px" height="50px">
+        <strong>Weather</strong>
+        <img src="images/sun-cloud.svg" alt="cloud" width="50px" height="50px" />
+        <br/>
+        <img src="images/sun.svg" alt="cloud" width="50px" height="50px" />
+    </h1>
+    <div class="container">
+        <div class="tabs is-centered">
+            <ul>
+                <li onclick="getCurrentWeather()"><a>Current Weather</a></li>
+                <li onclick="getForecast()"><a>5 Day Foreacast</a></li>
+            </ul>
+        </div>
+        <div id="weather"></div>
+        <div id="map"></div>
+        <section id="footer">
+            Created by @awaisabir
+        </section>
     </div>
-    <div id="weather"></div>
-    <div id="map"></div>
-    <section id="footer">
-        Created by @awaisabir
-    </section>
 
     <!--Scripts-->
     <script type="text/javascript" src="javascripts/script.js"></script>

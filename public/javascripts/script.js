@@ -2,6 +2,9 @@
  *  Variables
  **/
 let weather = document.getElementById('weather')
+let tab = document.querySelectorAll('.tabs ul li')
+let currentWeather = tab[0]
+let fiveDayForecast = tab[1]
 let latitude = 0,
     longitude = 0
 
@@ -10,16 +13,24 @@ let latitude = 0,
  *  Purpose: Function make call to backend enpoint for current weather and populate the DOM 
  **/
 function getCurrentWeather() {
+    fiveDayForecast.classList.remove('is-active')
+    currentWeather.classList.add('is-active')
     getLocation()
     .then(coords => {
-        weather.innerHTML = ''
+
+        weather.innerHTML = `
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+        `
         let {latitude, longitude} = coords
 
         fetch(`/weather/${latitude}/${longitude}`)
         .then(response => response.json())
         .then(data => {
             weather.innerHTML = `
-            <div class="container">
+            <div class="current-weather">
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
@@ -50,6 +61,8 @@ function getCurrentWeather() {
  *  Purpose: Function make call to backend enpoint for 5-day forecast and populate the DOM 
  **/
 function getForecast() {
+    currentWeather.classList.remove('is-active')
+    fiveDayForecast.classList.add('is-active')
     getLocation()
     .then(coords => {
         fetch(`/forecast/${coords.latitude}/${coords.longitude}`)
