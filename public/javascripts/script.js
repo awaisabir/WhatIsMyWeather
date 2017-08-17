@@ -32,7 +32,7 @@ function getCurrentWeather() {
                             <hr/>
                             <small>
                                 ${toTitleCase(data.weather[0].description)} <br/>
-                                <img src="http://openweathermap.org/img/w/${data.weather[0].icon}.png"/>
+                                <img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png"/>
                             </small>
                         </div>
                     </div>

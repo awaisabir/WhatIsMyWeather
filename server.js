@@ -28,7 +28,7 @@ app.get('/weather/:_lat/:_lon', (req, res, next) => {
     const { _lat, _lon } = req.params
 
     // send a request to the OpenWeatherMap API
-    rp(`http://api.openweathermap.org/data/2.5/weather?lat=${_lat}&lon=${_lon}&appid=${API_KEY}&units=metric`)
+    rp(`https://api.openweathermap.org/data/2.5/weather?lat=${_lat}&lon=${_lon}&appid=${API_KEY}&units=metric`)
         .then(response => JSON.parse(response))
         .then(data => res.json(data))
         .catch(err => console.error(err))
@@ -39,7 +39,7 @@ app.get('/forecast/:_lat/:_lon', (req, res, next) => {
     
     const { _lat, _lon } = req.params
 
-    rp(`http://api.openweathermap.org/data/2.5/forecast?lat=${_lat}&lon=${_lon}&appid=${API_KEY}&units=metric`)
+    rp(`https://api.openweathermap.org/data/2.5/forecast?lat=${_lat}&lon=${_lon}&appid=${API_KEY}&units=metric`)
         .then(response => JSON.parse(response))
         .then(data => res.json(data))
         .catch(err => console.log(err))
