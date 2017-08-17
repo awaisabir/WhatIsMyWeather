@@ -15,7 +15,7 @@ let latitude = 0,
 function getCurrentWeather() {
     fiveDayForecast.classList.remove('is-active')
     currentWeather.classList.add('is-active')
-    
+    addSpinner();
     getLocation()
     .then(coords => {
         let {latitude, longitude} = coords
@@ -74,8 +74,7 @@ function getForecast() {
  **/
 function getLocation() {
     return new Promise((resolve, reject) => {
-        if (navigator.geolocation) {
-            addSpinner();            
+        if (navigator.geolocation) {            
             navigator.geolocation.getCurrentPosition(position => {
             let {longitude, latitude} = position.coords
             resolve({longitude, latitude})
