@@ -15,15 +15,9 @@ let latitude = 0,
 function getCurrentWeather() {
     fiveDayForecast.classList.remove('is-active')
     currentWeather.classList.add('is-active')
+    
     getLocation()
     .then(coords => {
-
-        weather.innerHTML = `
-        <div class="spinner">
-            <div class="double-bounce1"></div>
-            <div class="double-bounce2"></div>
-        </div>
-        `
         let {latitude, longitude} = coords
 
         fetch(`/weather/${latitude}/${longitude}`)
@@ -78,10 +72,10 @@ function getForecast() {
  *  Name: getLocation
  *  Purpose: Function to get the location from the browser
  **/
-function getLocation()
-{
+function getLocation() {
     return new Promise((resolve, reject) => {
         if (navigator.geolocation) {
+            addSpinner();            
             navigator.geolocation.getCurrentPosition(position => {
             let {longitude, latitude} = position.coords
             resolve({longitude, latitude})
@@ -119,13 +113,20 @@ function initMap(lat, lng) {
 
 }
 
+function addSpinner() {
+    weather.innerHTML = `
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    `
+}
 
 /**
  *  Name: toTitleCase
  *  @param: string
  *  Purpose: Function to turn first letter of all words to uppercase
  **/
-function toTitleCase(str)
-{
+function toTitleCase(str) {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()})
 }
