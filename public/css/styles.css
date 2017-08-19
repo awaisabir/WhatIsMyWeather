@@ -26,10 +26,10 @@ hr {
     background-color: #00d1b2;
 }
 
-.display {
+.display-current {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     flex-wrap: wrap;
 }
 

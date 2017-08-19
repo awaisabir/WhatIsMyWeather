@@ -14,27 +14,27 @@
 
     <!--Basic Layout-->
     <h1>
-        <img src="images/cloud-2.svg" alt="cloud" width="50px" height="50px">
+        <img src="images/sun.svg" alt="cloud" width="50px" height="50px">
         <strong>Weather</strong>
         <img src="images/sun-cloud.svg" alt="cloud" width="50px" height="50px" />
         <br/>
-        <img src="images/sun.svg" alt="cloud" width="50px" height="50px" />
     </h1>
     <div class="container">
         <div class="tabs is-centered">
             <ul>
-                <li onclick="getCurrentWeather()"><a>Current Weather</a></li>
-                <li onclick="getForecast()"><a>5 Day Forecast</a></li>
+                <li onclick="getCurrentForecast()"><a>Current Forecast</a></li>
+                <li onclick="getWeeklyForecast()"><a>Weekly Forecast</a></li>
             </ul>
         </div>
         <div id="weather"></div>
         <div id="map"></div>
         <section id="footer">
-            Created by @awaisabir
+            Created by @awaisabir<br/> Powered by the <a href="https://darksky.ne">DarkSky API</a>
         </section>
     </div>
 
     <!--Scripts-->
+    <script type="text/javascript" src="javascripts/skycons.js"></script>
     <script type="text/javascript" src="javascripts/script.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTVKsHAOtyNQBcqV0B_meI6yvj7arjz1k&callback=initMap"></script>
 </body>
