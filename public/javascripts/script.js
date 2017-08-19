@@ -22,29 +22,29 @@ function getCurrentWeather() {
 
         fetch(`/weather/${latitude}/${longitude}`)
         .then(response => response.json())
-        .then(data => {
+        .then(weather => {
             weather.innerHTML = `
             <div class="current-weather">
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
-                            ${data.name}, ${data.sys.country}
+                            ${weather.name}, ${weather.sys.country}
                         </p>
                     </header>
                     <div class="card-content">
                         <div class="content">
-                            <h1>${data.main.temp}&deg;C</h1>
+                            <h1>${weather.main.temp}&deg;C</h1>
                             <hr/>
                             <small>
-                                ${toTitleCase(data.weather[0].description)} <br/>
-                                <img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png"/>
+                                ${toTitleCase(weather.weather[0].description)} <br/>
+                                <img src="https://openweathermap.org/img/w/${weather.weather[0].icon}.png"/>
                             </small>
                         </div>
                     </div>
                 </div>
             </div>
             `
-            initMap(data.coord.lat, data.coord.lon)
+            initMap(weather.coord.lat, weather.coord.lon)
         }).catch(err => console.log(err))
     })
     .catch(err => { weather.innerHTML = `${err.message}` })
@@ -60,9 +60,11 @@ function getForecast() {
     getLocation()
     .then(coords => {
         fetch(`/forecast/${coords.latitude}/${coords.longitude}`)
-                .then(response => response.json())
-                .then(json => console.log(json))
-                .catch(err => console.log(err))
+        .then(response => response.json())
+        .then(forecast => {
+            
+        })
+        .catch(err => console.log(err))
     })
     .catch(err => { weather.innerHTML = `${err.message}` })
 }

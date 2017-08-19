@@ -26,10 +26,11 @@ hr {
     background-color: #00d1b2;
 }
 
-.current-weather {
+.display {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .card {
