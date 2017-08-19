@@ -16,38 +16,34 @@ function getCurrentWeather() {
     fiveDayForecast.classList.remove('is-active')
     currentWeather.classList.add('is-active')
     addSpinner();
-    getLocation()
-    .then(coords => {
-        let {latitude, longitude} = coords
 
-        fetch(`/weather/${latitude}/${longitude}`)
-        .then(response => response.json())
-        .then(data => {
-            weather.innerHTML = `
-            <div class="current-weather">
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            ${data.name}, ${data.sys.country}
-                        </p>
-                    </header>
-                    <div class="card-content">
-                        <div class="content">
-                            <h1>${data.main.temp}&deg;C</h1>
-                            <hr/>
-                            <small>
-                                ${toTitleCase(data.weather[0].description)} <br/>
-                                <img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png"/>
-                            </small>
-                        </div>
+    fetch(`/weather`)
+    .then(response => response.json())
+    .then(data => {
+        weather.innerHTML = `
+        <div class="current-weather">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        ${data.name}, ${data.sys.country}
+                    </p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <h1>${data.main.temp}&deg;C</h1>
+                        <hr/>
+                        <small>
+                            ${toTitleCase(data.weather[0].description)} <br/>
+                            <img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png"/>
+                        </small>
                     </div>
                 </div>
             </div>
-            `
-            initMap(data.coord.lat, data.coord.lon)
-        }).catch(err => console.log(err))
+        </div>
+        `
+        initMap(data.coord.lat, data.coord.lon)
     })
-    .catch(err => { weather.innerHTML = `${err.message}` })
+    .catch(err => console.log(err))
 }
 
 /**
