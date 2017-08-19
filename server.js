@@ -3,7 +3,6 @@ import express from 'express'
 import rp from 'request-promise-native'
 import path from 'path'
 import bodyParser from 'body-parser'
-import geoLocation from 'iplocation'
 import CONFIG from './config/opeanweathermap'
 
 // app stuff
@@ -24,29 +23,19 @@ app.get('/', (req, res, next) => {
 })
 
 // weather endpoint
-app.get('/weather', (req, res, next) => {
-    let ip = req.headers['x-forwarded-for'] 
-            ||req.connection.remoteAddress
-            ||req.socket.remoteAddress
-            ||req.connection.socket.remoteAddress;
+app.get('/weather/:_lat/:_lon', (req, res, next) => {
 
-    geoLocation(ip)
-    .then(data => {
-        let {latitude, longitude} = data
+    const { _lat, _lon } = req.params
 
-        rp(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
+    // send a request to the OpenWeatherMap API
+    rp(`https://api.openweathermap.org/data/2.5/weather?lat=${_lat}&lon=${_lon}&appid=${API_KEY}&units=metric`)
         .then(response => JSON.parse(response))
         .then(data => res.json(data))
         .catch(err => console.error(err))
 
-    })
-    .catch(err => console.log(err))
-
-
-
 })
 
-app.get('/forecast', (req, res, next) => {
+app.get('/forecast/:_lat/:_lon', (req, res, next) => {
     
     const { _lat, _lon } = req.params
 
