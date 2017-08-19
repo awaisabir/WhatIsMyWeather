@@ -25,8 +25,12 @@ app.get('/', (req, res, next) => {
 
 // weather endpoint
 app.get('/weather', (req, res, next) => {
+    let ip = req.headers['x-forwarded-for'] 
+            ||req.connection.remoteAddress
+            ||req.socket.remoteAddress
+            ||req.connection.socket.remoteAddress;
 
-    geoLocation(req.connection.remoteAddress)
+    geoLocation(ip)
     .then(data => {
         let {latitude, longitude} = data
 
