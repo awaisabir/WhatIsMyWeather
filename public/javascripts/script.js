@@ -12,40 +12,71 @@ let latitude = 0,
  *  Name: getCurrentWeather
  *  Purpose: Function make call to backend enpoint for current weather and populate the DOM 
  **/
-function getCurrentWeather() {
+function getCurrentForecast() {
     fiveDayForecast.classList.remove('is-active')
     currentWeather.classList.add('is-active')
-    addSpinner();
+    addSpinner()
     getLocation()
     .then(coords => {
         let {latitude, longitude} = coords
 
-        fetch(`/weather/${latitude}/${longitude}`)
+        fetch(`/current/${latitude}/${longitude}`)
         .then(response => response.json())
-        .then(weather => {
+        .then(data => {
             weather.innerHTML = `
-            <div class="current-weather">
+            <div class="display-current">
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
-                            ${weather.name}, ${weather.sys.country}
+                            ${data.timezone}
                         </p>
                     </header>
                     <div class="card-content">
                         <div class="content">
-                            <h1>${weather.main.temp}&deg;C</h1>
+                            <h1>${data.currently.temperature}&deg;C</h1>
                             <hr/>
                             <small>
-                                ${toTitleCase(weather.weather[0].description)} <br/>
-                                <img src="https://openweathermap.org/img/w/${weather.weather[0].icon}.png"/>
+                                <h1>${data.currently.summary}</h1><br/>
+                                <canvas id="icon1" width="75" height="75"></canvas>
+                            </small>
+                            <hr/>
+                            <small>
+                                <strong>Precipitation: </strong> ${data.currently.precipProbability*100}% <br/>                                
+                                <strong>Humidity: </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${data.currently.humidity*100}% <br/>                                
+                                <strong>Wind: </strong> &nbsp;&nbsp;&nbsp;${data.currently.windSpeed} km/h <br/>
+                                <strong>UV Index: </strong> &nbsp;&nbsp;${data.currently.uvIndex} <br/>                                                                
+                            </small>
+                            <hr/>
+                            <small>
+                                <h2>Alerts</h2>
+                                <ul id="alerts"></ul>
                             </small>
                         </div>
                     </div>
                 </div>
             </div>
             `
-            initMap(weather.coord.lat, weather.coord.lon)
-        }).catch(err => console.log(err))
+            let alertsList = document.getElementById('alerts')
+            if (data.alerts === undefined) {
+                alertsList.innerHTML = `<li>There are no alerts at this moment</li>`
+            } else {
+                alertsList.innerHTML = ``
+                for (alert of data.alerts) {
+                    alertsList.innerHTML += `
+                        <li>
+                            <h3>${alert.title}</h3>
+                            <p>${alert.description}</p>
+                        </li>
+                    `
+                }
+            }
+
+            let skycons = new Skycons({"color": "#363636"})
+            skycons.set("icon1", data.currently.icon)
+            skycons.play()
+
+            initMap(data.latitude, data.longitude)
+        }).catch(err => weather.innerHTML = `Oops! Something went wrong at our end ... Please try again`)
     })
     .catch(err => { weather.innerHTML = `${err.message}` })
 }
@@ -54,7 +85,7 @@ function getCurrentWeather() {
  *  Name: getForecast
  *  Purpose: Function make call to backend enpoint for 5-day forecast and populate the DOM 
  **/
-function getForecast() {
+function getWeeklyForecast() {
     currentWeather.classList.remove('is-active')
     fiveDayForecast.classList.add('is-active')
     getLocation()
