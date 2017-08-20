@@ -31,9 +31,9 @@ app.get('/weekly/:_lat/:_lon', (req, res, next) => {
     
     const { _lat, _lon } = req.params
 
-    rp(`https://api.openweathermap.org/data/2.5/forecast?lat=${_lat}&lon=${_lon}&appid=${API_KEY}&units=metric`)
+    rp(`https://api.darksky.net/forecast/${API_KEY}/${_lat},${_lon}?exclude=currently,minutely,hourly&units=auto`)
         .then(response => JSON.parse(response))
-        .then(data => res.json(data))
+        .then(data => res.json(data.daily.data))
         .catch(err => console.log(err))
 })
 
