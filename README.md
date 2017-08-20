@@ -8,14 +8,13 @@ A simple app which tells you your weather or 5-day forecast.
   - ExpressJS
   - Babel
   - HTML5 Geolocation
-  - Javascript (ES6)
+  - ReactJS
   - Google Maps API
   - DarkSky API
   - Bulma
 
 ## Current Status
 Under Construction :zap:
-  - Addition of 5 - day forecast display using Bulma cards
-  - Rewriting the application in ReactJS
+  - This branch will be the updated version of the application in ReactJS (most likely without Redux)
 
 ### Created by [@awaisabir](https://github.com/awaisabir)
