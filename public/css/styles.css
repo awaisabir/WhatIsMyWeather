@@ -30,7 +30,19 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* flex-wrap: wrap; */
+}
+
+.display-weekly {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.display-weekly .card {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
 .card {
