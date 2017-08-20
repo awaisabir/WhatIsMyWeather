@@ -14,8 +14,7 @@ A simple app which tells you your weather or 5-day forecast.
   - Bulma
 
 ## Current Status
-Under Construction :zap:
-  - Addition of 5 - day forecast display using Bulma cards
-  - Rewriting the application in ReactJS
+Vanilla JS version (v1) completed.
+  - Rewriting the application in ReactJS (v2)
 
 ### Created by [@awaisabir](https://github.com/awaisabir)
