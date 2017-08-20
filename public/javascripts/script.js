@@ -20,65 +20,69 @@ function getCurrentForecast() {
     .then(coords => {
         let {latitude, longitude} = coords
 
-        fetch(`/current/${latitude}/${longitude}`)
-        .then(response => response.json())
-        .then(data => {
-            weather.innerHTML = `
-            <div class="display-current">
-                <div class="card">
-                    <header class="card-header">
-                        <p class="card-header-title">
-                            ${data.timezone}
-                        </p>
-                    </header>
-                    <div class="card-content">
-                        <div class="content">
-                            <h1>${data.currently.temperature}&deg;C</h1>
-                            <hr/>
-                            <small>
-                                <h1>${data.currently.summary}</h1><br/>
-                                <canvas id="icon1" width="75" height="75"></canvas>
-                            </small>
-                            <hr/>
-                            <small>
-                                <strong>Precipitation: </strong> ${data.currently.precipProbability*100}% <br/>                                
-                                <strong>Humidity: </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${data.currently.humidity*100}% <br/>                                
-                                <strong>Wind: </strong> &nbsp;&nbsp;&nbsp;${data.currently.windSpeed} km/h <br/>
-                                <strong>UV Index: </strong> &nbsp;&nbsp;${data.currently.uvIndex} <br/>                                                                
-                            </small>
-                            <hr/>
-                            <small>
-                                <h2>Alerts</h2>
-                                <ul id="alerts"></ul>
-                            </small>
+        reverseGeoCode(latitude, longitude)
+        .then(address => {
+
+            fetch(`/current/${latitude}/${longitude}`)
+            .then(response => response.json())
+            .then(data => {
+                weather.innerHTML = `
+                <div class="display-current">
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                ${address}
+                            </p>
+                        </header>
+                        <div class="card-content">
+                            <div class="content">
+                                <h1>${data.currently.temperature}&deg;C</h1>
+                                <hr/>
+                                <small>
+                                    <h3>${data.currently.summary}</h3>
+                                    <canvas id="icon1" width="50" height="50"></canvas>
+                                </small>
+                                <hr/>
+                                <small>
+                                    <strong>Precipitation: </strong> ${data.currently.precipProbability*100}% <br/>                                
+                                    <strong>Humidity: </strong>${data.currently.humidity*100}% <br/>                                
+                                    <strong>Wind: </strong>${data.currently.windSpeed} km/h <br/>
+                                    <strong>UV Index: </strong>;${data.currently.uvIndex} <br/>                                                                
+                                </small>
+                                <hr/>
+                                <small>
+                                    <h2>Alerts</h2>
+                                    <ul id="alerts"></ul>
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            `
-            let alertsList = document.getElementById('alerts')
-            if (data.alerts === undefined) {
-                alertsList.innerHTML = `<li>There are no alerts at this moment</li>`
-            } else {
-                alertsList.innerHTML = ``
-                for (alert of data.alerts) {
-                    alertsList.innerHTML += `
-                        <li>
-                            <h3>${alert.title}</h3>
-                            <p>${alert.description}</p>
-                        </li>
-                    `
+                `
+                let alertsList = document.getElementById('alerts')
+                if (data.alerts === undefined) {
+                    alertsList.innerHTML = `<li>There are no alerts at this moment</li>`
+                } else {
+                    alertsList.innerHTML = ``
+                    for (alert of data.alerts) {
+                        alertsList.innerHTML += `
+                            <li>
+                                <h3>${alert.title}</h3>
+                                <p>${alert.description}</p>
+                            </li>
+                        `
+                    }
                 }
-            }
-
-            let skycons = new Skycons({"color": "#363636"})
-            skycons.set("icon1", data.currently.icon)
-            skycons.play()
-
-            initMap(data.latitude, data.longitude)
-        }).catch(err => weather.innerHTML = `Oops! Something went wrong at our end ... Please try again`)
+    
+                let skycons = new Skycons({"color": "#363636"})
+                skycons.set("icon1", data.currently.icon)
+                skycons.play()
+    
+                initMap(data.latitude, data.longitude)
+            })
+        }).catch(err => weather.innerHTML = `${err.message}`)
     })
-    .catch(err => { weather.innerHTML = `${err.message}` })
+    .catch(err => weather.innerHTML = `${err.message}`)
 }
 
 /**
@@ -99,7 +103,6 @@ function getWeeklyForecast() {
     })
     .catch(err => { weather.innerHTML = `${err.message}` })
 }
-
 
 /**
  *  Name: getLocation
@@ -143,6 +146,19 @@ function initMap(lat, lng) {
         })
     }
 
+}
+
+function reverseGeoCode(lat, lng) {
+    let geocoder = new google.maps.Geocoder
+    let latLng = {lat: lat, lng: lng}
+    return new Promise((resolve, reject) => {
+        geocoder.geocode({'location': latLng}, (results, status) => {
+            if (status === 'OK')
+                resolve(results[2].formatted_address)
+            else
+                reject({message: 'Oops! Something went wrong at our end ... Please try again later'})
+        })
+    })
 }
 
 function addSpinner() {
