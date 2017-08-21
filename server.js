@@ -13,7 +13,8 @@ app.use(express.static(__dirname + '/public'))
 
 
 app.get('/', (req, res, next) => {
-    res.sendFile(path.join(__dirname + '/views/index.html'))
+    res.send('Welcome to the API')
+    // res.sendFile(path.join(__dirname + '/views/index.html'))
 })
 
 app.get('/current/:_lat/:_lon', (req, res, next) => {
