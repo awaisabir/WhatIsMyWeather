@@ -18,6 +18,6 @@ Under Construction :zap:
   - Have to add Google Maps to the application
   - Need to hook in Redux
   - Need to set up components properly
-  - Hooke everything up with the Redux store
+  - Hook everything up with the Redux store
 
 ### Created by [@awaisabir](https://github.com/awaisabir)
