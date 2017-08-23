@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
 
 import CurrentForecast    from '../components/CurrentForecast'
 import WeeklyForecastList from '../components/WeeklyForecastList'
+import MapContainer from '../components/MapContainer'
 
 import sun from '../assets/sun.svg'
 import cloudSun from '../assets/cloud-sun.svg'
@@ -32,6 +33,8 @@ const App = () => {
               <Route exact path="/weekly" component={WeeklyForecastList} />
             </div>
         </div>
+
+        <MapContainer />
       </div>
     </Router>
   )
