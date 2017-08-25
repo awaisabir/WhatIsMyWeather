@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
-import geoLocationActionCreator  from '../actions/geoLocation_actionCreator'
+import fetchGeoLocation  from '../actions/fetchGeoLocation'
+import fetchCurrentForecast from '../actions/fetchCurrentForecast'
 
 import CurrentForecastComponent    from '../components/CurrentForecast'
 import WeeklyForecastListComponent from '../components/WeeklyForecastList'
@@ -13,9 +14,13 @@ import cloudSun from '../assets/cloud-sun.svg'
 import '../styles/App.css'
 
 class App extends Component {
-	componentDidMount() {
-		this.props.getLocation()
+	componentWillMount() {
+		this.props.fetchGeoLocation()
 	}
+
+	// componentDidMount() {
+	// 	this.props.fetchCurrentForecast(this.props.latitude, this.props.longitude)
+	// }
 	render() {
 		return (
 			<div>
@@ -30,19 +35,29 @@ class App extends Component {
 						<div className="container">
 						<div className="tabs is-centered">
 							<ul>
-							<li><NavLink to="/current" activeStyle={{ color:'#00d1b2' }}>Current Forecast</NavLink></li>
+							<li onClick={() => this.props.fetchCurrentForecast(this.props.latitude, this.props.longitude)}>
+								<NavLink to="/current" activeStyle={{color:'#00d1b2'}}>Current Forecast</NavLink>
+							</li>
 							<li><NavLink to="/weekly" activeStyle={{ color:'#00d1b2' }}>Weekly Forecast</NavLink></li>
 							</ul>
 						</div>
 						
 				
 							<div>
-							<Route exact path="/current" component={CurrentForecastComponent} />
+							<Route 
+								exact path="/current" 
+								render={() => <CurrentForecastComponent 
+												lat={this.props.latitude} 
+												lon={this.props.longitude} 
+												forecast={this.props.currentForecast}
+												/>
+									} 
+								/>
 							<Route exact path="/weekly" component={WeeklyForecastListComponent} />
 							</div>
 						</div>
 				
-						<MapComponent lat={this.props.location.latitude} lon={this.props.location.longitude}/>
+						<MapComponent lat={this.props.latitude} lon={this.props.longitude}/>
 					</div>
 				</Router>
 			</div>
@@ -51,13 +66,17 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  return {location : state.geoLocation.location}
+	  return {
+		  latitude : state.location.latitude,
+		  longitude : state.location.longitude,
+		  currentForecast : state.current_forecast
+	}
 }
 
 function mapDispatchToProps(dispatch) {
   
     return bindActionCreators({
-      getLocation: geoLocationActionCreator
+      fetchGeoLocation, fetchCurrentForecast
     }, dispatch)
 }
 

@@ -9,7 +9,7 @@ import './index.css'
 import App from './components/App'
 import registerServiceWorker from './registerServiceWorker'
 
-import reducers from './reducers'
+import reducers from './reducers/index'
 const createStoreWithMiddleware = applyMiddleware(createLogger(), promise())(createStore);
 
 ReactDOM.render(
