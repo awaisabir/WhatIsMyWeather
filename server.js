@@ -2,6 +2,7 @@ import express from 'express'
 import rp from 'request-promise-native'
 import path from 'path'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 import CONFIG from './config/config'
 
 const app = express()
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 3001
 const API_KEY = CONFIG.API_KEY
 
 app.use(express.static(__dirname + '/public'))
+app.use(cors())
 
 
 app.get('/', (req, res, next) => {
