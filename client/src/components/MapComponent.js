@@ -19,7 +19,7 @@ const MapComponent = ({lat, lon}) => {
     }
 
     return(
-        <div>
+        <div className="map">
             The map will be rendered at {lat}, {lon}
         </div>
     )

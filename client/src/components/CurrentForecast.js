@@ -3,10 +3,7 @@ import cloudSun from '../assets/cloud-sun.svg'
 
 class CurrentForecastComponent extends Component {
     render() {
-        if (this.props.lon == null 
-            || this.props.lat == null 
-            || Object.keys(this.props.forecast).length === 0
-        )
+        if (this.props.lon == null || this.props.lat == null || Object.keys(this.props.forecast).length === 0) {
             return (
                 <div>
                     <div className="spinner">
@@ -19,12 +16,33 @@ class CurrentForecastComponent extends Component {
                     </h2>
                 </div>
             )
+        }
 
 
         return (
-            <div>
-                <h1>{this.props.forecast.currently.apparentTemperature}</h1>
-            </div>
+			<div style={{display: 'flex', justifyContent: 'space-around'}}>
+				<div className="card">
+					<header className="card-header">
+						<p className="card-header-title">
+							Location
+						</p>
+					</header>
+					<div className="card-content">
+						<div className="content">
+							{/* <canvas id="icon1" width="50" height="50"></canvas> */}
+							<hr/>
+							<small>
+								<h1>{Math.ceil(this.props.forecast.currently.apparentTemperature)}&deg;C</h1>
+								<strong>Precip: </strong> {this.props.forecast.currently.precipProbability*100}% <br/>                                
+								<strong>Humidity: </strong>{Math.round(this.props.forecast.currently.humidity*100)}% <br/>                                
+								<strong>Wind: </strong>{this.props.forecast.currently.windSpeed} km/h <br/>
+								<strong>UV Index: </strong>{this.props.forecast.currently.uvIndex} <br/>                                                                
+							</small>
+							<hr/>
+						</div>
+					</div>
+				</div>
+			</div>
         )
     }
 }
