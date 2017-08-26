@@ -18,9 +18,11 @@ class App extends Component {
 		this.props.fetchGeoLocation()
 	}
 
-	// componentDidMount() {
-	// 	this.props.fetchCurrentForecast(this.props.latitude, this.props.longitude)
-	// }
+	componentDidUpdate() {
+		if (this.props.fetched_location && !this.props.fetched_forecast)
+			this.props.fetchCurrentForecast(this.props.latitude, this.props.longitude)
+	}
+
 	render() {
 		return (
 			<div>
@@ -33,30 +35,30 @@ class App extends Component {
 						</h1>
 				
 						<div className="container">
-						<div className="tabs is-centered">
-							<ul>
-							<li onClick={() => this.props.fetchCurrentForecast(this.props.latitude, this.props.longitude)}>
-								<NavLink to="/current" activeStyle={{color:'#00d1b2'}}>Current Forecast</NavLink>
-							</li>
-							<li><NavLink to="/weekly" activeStyle={{ color:'#00d1b2' }}>Weekly Forecast</NavLink></li>
-							</ul>
-						</div>
-						
-				
+							<div className="tabs is-centered">
+								<ul>
+								<li onClick={() => this.props.fetchCurrentForecast(this.props.latitude, this.props.longitude)}>
+									<NavLink to="/current" activeStyle={{ color:'#00d1b2' }}>Current Forecast</NavLink>
+								</li>
+								<li>
+									<NavLink to="/weekly" activeStyle={{ color:'#00d1b2' }}>Weekly Forecast</NavLink>
+								</li>
+								</ul>
+							</div>
 							<div>
-							<Route 
-								exact path="/current" 
-								render={() => <CurrentForecastComponent 
-												lat={this.props.latitude} 
-												lon={this.props.longitude} 
-												forecast={this.props.currentForecast}
-												/>
+								<Route exact path="/current"
+									render={() => 
+										<CurrentForecastComponent 
+											lat={this.props.latitude} 
+											lon={this.props.longitude} 
+											forecast={this.props.currentForecast}
+										/>
 									} 
 								/>
-							<Route exact path="/weekly" component={WeeklyForecastListComponent} />
+								<Route exact path="/weekly" component={WeeklyForecastListComponent} />
 							</div>
 						</div>
-				
+
 						<MapComponent lat={this.props.latitude} lon={this.props.longitude}/>
 					</div>
 				</Router>
@@ -65,19 +67,18 @@ class App extends Component {
 	}
 }
 
-function mapStateToProps(state) {
-	  return {
-		  latitude : state.location.latitude,
-		  longitude : state.location.longitude,
-		  currentForecast : state.current_forecast
+const mapStateToProps = state => {
+	let {latitude, longitude} = state.location
+	return {
+		latitude,longitude,
+		currentForecast : state.current_forecast,
+		fetching_forecast : state.fetching_forecast,
+		fetched_forecast : state.fetched_forecast,
+		fetching_location : state.fetching_location,
+		fetched_location : state.fetched_location,
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-  
-    return bindActionCreators({
-      fetchGeoLocation, fetchCurrentForecast
-    }, dispatch)
-}
+const mapDispatchToProps = dispatch => bindActionCreators({fetchGeoLocation, fetchCurrentForecast}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
