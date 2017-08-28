@@ -1,28 +1,27 @@
-import React from 'react'
+import React, {Component} from 'react'
 import '../styles/MapComponent.css'
-import map from '../assets/marker.svg'
+import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 
-const MapComponent = ({lat, lon}) => {
-    if (!lat || !lon) {
-        return (
-            <div>
-                <div className="spinner">
-                    <div className="double-bounce1"></div>
-                    <div className="double-bounce2"></div>
-                </div>
-                <h2>       
-                    Pinpointing your location ... 
-                    <img src={map} alt="cloud" width="25px" height="25px" />
-                </h2>
+class MapComponent extends Component {
+    render() {
+        const markers = this.props.markers || []
+        if (!this.props.lat || !this.props.lon) {
+            return null
+        }
+    
+        return(
+            <div className="map">
+                <GoogleMap
+                    defaultZoom={15}
+                    defaultCenter={{ lat: this.props.lat, lng: this.props.lon}}>
+                    {markers.map((marker, index) => {
+                            <Marker {...marker} />
+                        })
+                    }
+                </GoogleMap>
             </div>
-        ) 
+        )
     }
-
-    return(
-        <div className="map">
-            The map will be rendered at {lat}, {lon}
-        </div>
-    )
 }
 
-export default MapComponent
+export default withGoogleMap(MapComponent)

@@ -19,8 +19,8 @@ class CurrentForecastComponent extends Component {
         }
 
 
-        return (
-			<div style={{display: 'flex', justifyContent: 'space-around'}}>
+    return (
+			<div style={{display: 'flex', justifyContent: 'space-around', marginBottom: '50px'}}>
 				<div className="card">
 					<header className="card-header">
 						<p className="card-header-title">
@@ -43,8 +43,8 @@ class CurrentForecastComponent extends Component {
 					</div>
 				</div>
 			</div>
-        )
-    }
+		)
+	}
 }
 
 export default CurrentForecastComponent
