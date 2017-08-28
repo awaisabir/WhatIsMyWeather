@@ -54,7 +54,27 @@ export default function reducer(state=initialState, action) {
                 fetched_forecast: false,
                 errors: [...action.payload.data]
             }
-    
+        
+        case 'FETCH_WEEK_FORECAST_PENDING':
+            return {
+                ...state,
+                fetching_forecast: true,
+                fetched_forecast: false,
+            }
+        case 'FETCH_WEEK_FORECAST_FULFILLED':
+            return {
+                ...state,
+                fetching_forecast: false,
+                fetched_forecast: true,
+                five_day_forecast: [...action.payload.data]
+            }
+        case 'FETCH_WEEK_FORECAST_REJECTED':
+            return {
+                ...state,
+                fetching_forecast: false,
+                fetched_forecast: false,
+                errors: [...action.payload.data]
+            }
         default:
             return state
     }
