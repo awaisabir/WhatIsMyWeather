@@ -19,11 +19,13 @@ class App extends Component {
 	}
 
 	componentDidUpdate() {
-		if (this.props.fetched_location && !this.props.fetched_forecast)
+		if (this.props.fetched_location && (!this.props.fetched_current_forecast || !this.props.fetched_weekly_forecast)) {
 			this.props.fetchCurrentForecast(this.props.latitude, this.props.longitude)
+			this.props.fetchWeeklyForecast(this.props.latitude, this.props.longitude)		
+		}
 	}
 
-	render() {
+	render() {		
 		return (
 			<div>
 				<Router>
@@ -45,18 +47,25 @@ class App extends Component {
 									</li>
 								</ul>
 							</div>
+
 							<div>
 								<Route exact path="/current"
 									render={() => 
 										<CurrentForecastComponent 
-											lat={this.props.latitude} 
-											lon={this.props.longitude} 
 											forecast={this.props.currentForecast}
 										/>
 									} 
 								/>
-								<Route exact path="/weekly" component={WeeklyForecastListComponent} />
+								<Route exact path="/weekly"
+									render={() =>
+										<WeeklyForecastListComponent 
+											forecast={this.props.weeklyForecast}
+										/>
+									}
+									
+								/>
 							</div>
+
 							{this.props.fetched_location ? 
 								<MapComponent lat={this.props.latitude} lon={this.props.longitude}
 									containerElement={
@@ -90,10 +99,13 @@ const mapStateToProps = state => {
 	return {
 		latitude,longitude,
 		currentForecast : state.current_forecast,
-		fetching_forecast : state.fetching_forecast,
-		fetched_forecast : state.fetched_forecast,
+		fetching_current_forecast : state.fetching_current_forecast,
+		fetched_current_forecast : state.fetched_current_forecast,
+		fetching_weekly_forecast : state.fetching_weekly_forecast,
+		fetched_weekly_forecast : state.fetched_weekly_forecast,
 		fetching_location : state.fetching_location,
 		fetched_location : state.fetched_location,
+		weeklyForecast : state.weekly_forecast,
 	}
 }
 

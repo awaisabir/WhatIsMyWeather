@@ -1,13 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class WeeklyForecastList extends Component {
-    render() {
-        return (
-            <div>
-                <h1>Weekly Forecast List</h1>
-            </div>
-        )
-    }
+const WeeklyForecastList = ({forecast}) => {
+    return (
+        <div>
+            <h1>Weekly Forecast</h1>
+        </div>
+    )
 }
 
 export default WeeklyForecastList

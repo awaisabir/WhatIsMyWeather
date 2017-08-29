@@ -11,14 +11,11 @@ class MapComponent extends Component {
     
         return(
             <div className="map">
-                <GoogleMap
-                    defaultZoom={15}
-                    defaultCenter={{ lat: this.props.lat, lng: this.props.lon}}>
-                    {markers.map((marker, index) => {
-                            <Marker {...marker} />
-                        })
-                    }
-                </GoogleMap>
+							<GoogleMap
+								defaultZoom={15}
+								defaultCenter={{ lat: this.props.lat, lng: this.props.lon}}>
+								{markers.map((marker, index) => <Marker {...marker} />)}
+							</GoogleMap>
             </div>
         )
     }

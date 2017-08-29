@@ -3,7 +3,7 @@ import cloudSun from '../assets/cloud-sun.svg'
 
 class CurrentForecastComponent extends Component {
     render() {
-        if (this.props.lon == null || this.props.lat == null || Object.keys(this.props.forecast).length === 0) {
+        if (Object.keys(this.props.forecast).length === 0) {
             return (
                 <div>
                     <div className="spinner">

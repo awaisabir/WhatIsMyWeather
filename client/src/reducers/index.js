@@ -2,6 +2,8 @@ const initialState = {
     location: {},
     fetching_location: false,
     fetched_location: false,
+    fetching_weekly_forecast : false,
+    fetched_weekly_forecast : false,
     current_forecast: {},
     five_day_forecast: [],
     errors: [],
@@ -36,36 +38,36 @@ export default function reducer(state=initialState, action) {
         case 'FETCH_CURRENT_FORECAST_PENDING':
             return {
                 ...state,
-                fetching_forecast: true,
+                fetching_current_forecast: true,
             }
 
         case 'FETCH_CURRENT_FORECAST_FULFILLED':
             return {
                 ...state,
-                fetching_forecast: false,
-                fetched_forecast: true,
+                fetching_current_forecast: false,
+                fetched_current_forecast: true,
                 current_forecast: {...action.payload.data},
             }
 
         case 'FETCH_CURRENT_FORECAST_REJECTED':
             return {
                 ...state,
-                fetching_forecast: false,
-                fetched_forecast: false,
+                fetching_current_forecast: false,
+                fetched_current_forecast: false,
                 errors: [...action.payload.data]
             }
         
         case 'FETCH_WEEK_FORECAST_PENDING':
             return {
                 ...state,
-                fetching_forecast: true,
-                fetched_forecast: false,
+                fetching_weekly_forecast: true,
+                fetched_weekly_forecast: false,
             }
         case 'FETCH_WEEK_FORECAST_FULFILLED':
             return {
                 ...state,
-                fetching_forecast: false,
-                fetched_forecast: true,
+                fetching_weekly_forecast: false,
+                fetched_weekly_forecast: true,
                 five_day_forecast: [...action.payload.data]
             }
         case 'FETCH_WEEK_FORECAST_REJECTED':
