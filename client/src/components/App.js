@@ -14,18 +14,38 @@ import map from '../assets/marker.svg'
 import '../styles/App.css'
 
 class App extends Component {
+
 	componentWillMount() {
 		this.props.fetchGeoLocation()
 	}
 
-	componentDidUpdate() {
-		if (this.props.fetched_location && (!this.props.fetched_current_forecast || !this.props.fetched_weekly_forecast)) {
-			this.props.fetchCurrentForecast(this.props.latitude, this.props.longitude)
-			this.props.fetchWeeklyForecast(this.props.latitude, this.props.longitude)		
+	componentDidUpdate(prevProps) {
+		let {location, fetchWeeklyForecast, fetchCurrentForecast} = this.props
+		if(prevProps.location.fetched !== location.fetched) {
+			let {latitude, longitude} = location.location
+			fetchCurrentForecast(latitude, longitude)
+			fetchWeeklyForecast(latitude, longitude)
 		}
 	}
 
-	render() {		
+	currentForecastClickHandler(latitude, longitude) {
+		let {currentForecast, fetchCurrentForecast} = this.props
+		if (!currentForecast.fetched) {
+			fetchCurrentForecast(latitude, longitude)
+		}
+	}
+
+	weeklyForecastClickHandler(latitude, longitude) {
+		let {weeklyForecast, fetchWeeklyForecast} = this.props
+		if (!weeklyForecast.fetched) {
+			fetchWeeklyForecast(latitude, longitude)
+		}
+	}
+	
+	render() {
+		let {location, currentForecast, weeklyForecast, fetchCurrentForecast, fetchWeeklyForecast} = this.props
+		let {latitude, longitude} = location.location
+		
 		return (
 			<div>
 				<Router>
@@ -39,10 +59,10 @@ class App extends Component {
 						<div className="container">
 							<div className="tabs is-centered">
 								<ul>
-									<li onClick={() => this.props.fetchCurrentForecast(this.props.latitude, this.props.longitude)}>
+									<li onClick={() => this.currentForecastClickHandler(latitude, longitude)}>
 										<NavLink to="/current" activeStyle={{ color:'#00d1b2' }}>Current Forecast</NavLink>
 									</li>
-									<li>
+									<li onClick={() => this.weeklyForecastClickHandler(latitude, longitude)}>
 										<NavLink to="/weekly" activeStyle={{ color:'#00d1b2' }}>Weekly Forecast</NavLink>
 									</li>
 								</ul>
@@ -52,22 +72,21 @@ class App extends Component {
 								<Route exact path="/current"
 									render={() => 
 										<CurrentForecastComponent 
-											forecast={this.props.currentForecast}
+											forecast={currentForecast.forecast}
 										/>
 									} 
 								/>
 								<Route exact path="/weekly"
 									render={() =>
 										<WeeklyForecastListComponent 
-											forecast={this.props.weeklyForecast}
+											forecast={weeklyForecast.forecast}
 										/>
 									}
-									
 								/>
 							</div>
 
-							{this.props.fetched_location ? 
-								<MapComponent lat={this.props.latitude} lon={this.props.longitude}
+							{location.fetched ? 
+								<MapComponent lat={latitude} lon={longitude}
 									containerElement={
 										<div style={{ height: `320px`, marginTop: '50px'}} />
 									}
@@ -94,20 +113,7 @@ class App extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	let {latitude, longitude} = state.location
-	return {
-		latitude,longitude,
-		currentForecast : state.current_forecast,
-		fetching_current_forecast : state.fetching_current_forecast,
-		fetched_current_forecast : state.fetched_current_forecast,
-		fetching_weekly_forecast : state.fetching_weekly_forecast,
-		fetched_weekly_forecast : state.fetched_weekly_forecast,
-		fetching_location : state.fetching_location,
-		fetched_location : state.fetched_location,
-		weeklyForecast : state.weekly_forecast,
-	}
-}
+const mapStateToProps = state => state
 
 const mapDispatchToProps = dispatch => bindActionCreators(Actions, dispatch)
 
