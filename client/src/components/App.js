@@ -20,16 +20,16 @@ class App extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		let {location, fetchWeeklyForecast, fetchCurrentForecast} = this.props
+		let { location, fetchWeeklyForecast, fetchCurrentForecast } = this.props
 		if(prevProps.location.fetched !== location.fetched) {
-			let {latitude, longitude} = location.location
+			let { latitude, longitude } = location.location
 			fetchCurrentForecast(latitude, longitude)
 			fetchWeeklyForecast(latitude, longitude)
 		}
 	}
 
 	currentForecastClickHandler(latitude, longitude) {
-		let {currentForecast, fetchCurrentForecast} = this.props
+		let { currentForecast, fetchCurrentForecast } = this.props
 		if (!currentForecast.fetched) {
 			fetchCurrentForecast(latitude, longitude)
 		}
@@ -43,8 +43,8 @@ class App extends Component {
 	}
 	
 	render() {
-		let {location, currentForecast, weeklyForecast, fetchCurrentForecast, fetchWeeklyForecast} = this.props
-		let {latitude, longitude} = location.location
+		let { location, currentForecast, weeklyForecast } = this.props
+		let { latitude, longitude } = location.location
 		
 		return (
 			<div>
@@ -95,15 +95,15 @@ class App extends Component {
 									}
 								/> :
 								<div>
-                    <div className="spinner">
-											<div className="double-bounce1"></div>
-											<div className="double-bounce2"></div>
-                    </div>
-                    <h2>       
-											Pinpointing your location ... 
-											<img src={map} alt="cloud" width="25px" height="25px" />
-                    </h2>
-                </div>
+									<div className="spinner">
+										<div className="double-bounce1"></div>
+										<div className="double-bounce2"></div>
+									</div>
+									<h2>       
+										Pinpointing your location ... 
+										<img src={map} alt="cloud" width="25px" height="25px" />
+									</h2>
+								</div>
 							}
 						</div>
 					</div>
