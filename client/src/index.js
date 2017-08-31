@@ -6,7 +6,7 @@ import { createLogger } from 'redux-logger'
 import promise from 'redux-promise-middleware'
 
 import './index.css'
-import App from './components/App'
+import App from './containers/App'
 import registerServiceWorker from './registerServiceWorker'
 
 import reducers from './reducers/index'
