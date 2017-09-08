@@ -15,9 +15,7 @@ A simple app which tells you your weather or 5-day forecast.
 
 ## Current Status
 Under Construction :zap:
-  - Have to add Google Maps to the application
-  - Need to hook in Redux
-  - Need to set up components properly
-  - Hook everything up with the Redux store
+  - Have to get icons on Weekly Forecast
+  - Have to add the use of Reverse Geo Location
 
 ### Created by [@awaisabir](https://github.com/awaisabir)
