@@ -1,5 +1,6 @@
 import React from 'react'
 import cloudSun from '../assets/cloud-sun.svg'
+import '../styles/WeeklyForecast.css'
 
 const WeeklyForecastList = ({forecast}) => {
   if (Object.keys(forecast).length === 0) {
@@ -18,13 +19,13 @@ const WeeklyForecastList = ({forecast}) => {
   }
 
   return (
-    <div style={{display: 'flex', justifyContent: 'space-around', marginBottom: '50px', flexWrap: 'wrap'}}>
+    <div className="display-weekly">
       {forecast.map(item => {
           return (
             <div className="card" style={{marginTop: '10px'}}>
               <header className="card-header">
                 <p className="card-header-title">
-                  Location
+                  { dayToString((new Date(item.time*1000).getDay())) }
                 </p>
               </header>
               <div className="card-content">
@@ -32,7 +33,12 @@ const WeeklyForecastList = ({forecast}) => {
                   {/* <canvas id="icon1" width="50" height="50"></canvas> */}
                   <hr/>
                   <small>
-                    <h1>{item.summary}</h1>                                                         
+                    <h3>{item.summary}</h3>                                                         
+                  </small>
+                  <hr/>
+                  <small>
+                      <p><strong>Max:</strong> {Math.ceil(item.apparentTemperatureMax)}&deg;C</p>
+                      <p><strong>Min:</strong> {Math.ceil(item.apparentTemperatureMin)}&deg;C</p>
                   </small>
                   <hr/>
                 </div>
@@ -43,6 +49,16 @@ const WeeklyForecastList = ({forecast}) => {
       }
     </div>
   )
+}
+
+const dayToString = int => {
+  if (int === 0) return 'Sun'
+  if (int === 1) return 'Mon'
+  if (int === 2) return 'Tue'
+  if (int === 3) return 'Wed'
+  if (int === 4) return 'Thu'
+  if (int === 5) return 'Fri'
+  if (int === 6) return 'Sat'
 }
 
 export default WeeklyForecastList
