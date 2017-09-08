@@ -1,4 +1,5 @@
 import React from 'react'
+import Skycons from 'react-skycons'
 import cloudSun from '../assets/cloud-sun.svg'
 import '../styles/WeeklyForecast.css'
 

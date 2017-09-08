@@ -1,4 +1,5 @@
 import React from 'react'
+import Skycons from 'react-skycons'
 import cloudSun from '../assets/cloud-sun.svg'
 
 const CurrentForecastComponent = ({forecast}) => {
@@ -22,12 +23,15 @@ const CurrentForecastComponent = ({forecast}) => {
       <div className="card">
         <header className="card-header">
           <p className="card-header-title">
-            Location
+            Reverse Geo Location
           </p>
         </header>
         <div className="card-content">
           <div className="content">
-            {/* <canvas id="icon1" width="50" height="50"></canvas> */}
+            <Skycons 
+              color='black' 
+              icon={formatStringForSkycons(forecast.currently.icon)} 
+              autoplay={true}/>
             <hr/>
             <small>
               <h1>{Math.ceil(forecast.currently.apparentTemperature)}&deg;C</h1>
@@ -42,6 +46,12 @@ const CurrentForecastComponent = ({forecast}) => {
       </div>
     </div>
   )
+}
+
+const formatStringForSkycons = string => {
+  let newString = string.replace(/-/g, "_")
+  console.log(newString)
+  return newString.toUpperCase()
 }
 
 export default CurrentForecastComponent
