@@ -2,7 +2,7 @@
 
 # What's your current weather? ..
 
-A simple app which tells you your weather or 5-day forecast.
+A simple app which tells you the current weather conditions or weekly forecast based on your location.
 
 ## Technologies used
   - ExpressJS
