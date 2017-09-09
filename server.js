@@ -10,13 +10,12 @@ const PORT = process.env.PORT || 3001
 
 const API_KEY = CONFIG.API_KEY
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/public/build'))
 app.use(cors())
 
 
 app.get('/', (req, res, next) => {
-    res.send('Welcome to the API')
-    // res.sendFile(path.join(__dirname + '/views/index.html'))
+    res.sendFile(path.join(__dirname + '/public/build/index.html'))
 })
 
 app.get('/current/:_lat/:_lon', (req, res, next) => {
