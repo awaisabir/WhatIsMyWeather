@@ -4,7 +4,7 @@ import axios from 'axios'
 export const fetchWeeklyForecast = (latitude, longitude) => {
   return {
       type: 'FETCH_WEEK_FORECAST',
-      payload: axios.get(`http://localhost:3001/weekly/${latitude}/${longitude}`)
+      payload: axios.get(`https://localhost:3001/weekly/${latitude}/${longitude}`)
   }
 }
 
@@ -18,7 +18,7 @@ export const fetchGeoLocation = location => {
 export const fetchCurrentForecast = (latitude, longitude) => {
     return {
         type: 'FETCH_CURRENT_FORECAST',
-        payload: axios.get(`http://localhost:3001/current/${latitude}/${longitude}`)
+        payload: axios.get(`https://localhost:3001/current/${latitude}/${longitude}`)
     }
 }
 
