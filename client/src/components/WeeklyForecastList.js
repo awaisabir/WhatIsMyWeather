@@ -23,7 +23,7 @@ const WeeklyForecastList = ({forecast}) => {
     <div className="display-weekly">
       {forecast.map(item => {
           return (
-            <div className="card" style={{marginTop: '10px'}}>
+            <div className="card" style={{marginTop: '10px'}} key={item.time}>
               <header className="card-header">
                 <p className="card-header-title">
                   { dayToString((new Date(item.time*1000).getDay())) }
@@ -31,7 +31,11 @@ const WeeklyForecastList = ({forecast}) => {
               </header>
               <div className="card-content">
                 <div className="content">
-                  {/* <canvas id="icon1" width="50" height="50"></canvas> */}
+                  <Skycons 
+                    color='black' 
+                    icon={formatStringForSkycons(item.icon)} 
+                    autoplay={true}
+                  />
                   <hr/>
                   <small>
                     <h3>{item.summary}</h3>                                                         
@@ -50,6 +54,11 @@ const WeeklyForecastList = ({forecast}) => {
       }
     </div>
   )
+}
+
+const formatStringForSkycons = string => {
+  let newString = string.replace(/-/g, "_")
+  return newString.toUpperCase()
 }
 
 const dayToString = int => {

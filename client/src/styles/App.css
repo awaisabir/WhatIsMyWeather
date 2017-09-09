@@ -24,6 +24,10 @@ hr {
     background-color: #00d1b2;
 }
 
+canvas {
+    width: 50% !important;
+}
+
 .display-current {
     display: flex;
     align-items: center;
