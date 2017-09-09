@@ -1,0 +1,25 @@
+.display-weekly {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.display-weekly .card {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.card {
+    transition: 0.2s;
+}
+
+.card:hover {
+    transition: 0.4s;
+    box-shadow: 2px 2px #888888;
+}
+
+.card-header-title {
+    justify-content: center;
+}

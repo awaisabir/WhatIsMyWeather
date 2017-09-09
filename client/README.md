@@ -1,0 +1,1 @@
+This is the application's client side that will be created using ReactJS. The structure is set up using the `create-react-app` cli
