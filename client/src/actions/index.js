@@ -22,7 +22,14 @@ export const fetchCurrentForecast = (latitude, longitude) => {
     }
 }
 
-function getGeoLocation() {
+export const fetchReversedGeoLocation = (latitude, longitude) => {
+    return {
+        type: 'FETCH_REVERSED_LOCATION',
+        payload: reverseGeoCode(latitude, longitude)
+    }
+}
+
+const getGeoLocation = () => {
   return new Promise((resolve, reject) => {
       if (navigator.geolocation) {            
           navigator.geolocation.getCurrentPosition(position => {
@@ -33,4 +40,20 @@ function getGeoLocation() {
           reject({message: 'Turn on geo-location'})
       }
   })
+}
+
+const reverseGeoCode = (lat, lng) => {
+    return new Promise((resolve, reject) => {
+        if (lat === undefined || lng === undefined)
+            reject('No ...')
+
+        let geocoder = new window.google.maps.Geocoder
+        let latLng = {lat, lng}
+        geocoder.geocode({'location': latLng}, (results, status) => {
+            if (status === 'OK') 
+                resolve(results[2].formatted_address)
+            else
+                reject('No ...')
+        })
+    })	
 }

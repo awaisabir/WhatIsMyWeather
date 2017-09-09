@@ -2,7 +2,7 @@ import React from 'react'
 import Skycons from 'react-skycons'
 import cloudSun from '../assets/cloud-sun.svg'
 
-const CurrentForecastComponent = ({forecast}) => {
+const CurrentForecastComponent = ({forecast, address}) => {
   if (Object.keys(forecast).length === 0) {
     return (
       <div>
@@ -23,7 +23,7 @@ const CurrentForecastComponent = ({forecast}) => {
       <div className="card">
         <header className="card-header">
           <p className="card-header-title">
-            Reverse Geo Location
+            {address}
           </p>
         </header>
         <div className="card-content">
@@ -50,7 +50,6 @@ const CurrentForecastComponent = ({forecast}) => {
 
 const formatStringForSkycons = string => {
   let newString = string.replace(/-/g, "_")
-  console.log(newString)
   return newString.toUpperCase()
 }
 

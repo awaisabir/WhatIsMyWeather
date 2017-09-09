@@ -16,6 +16,5 @@ A simple app which tells you the current weather conditions or weekly forecast b
 ## Current Status
 Under Construction :zap:
   - Have to get icons on Weekly Forecast
-  - Have to add the use of Reverse Geo Location
 
 ### Created by [@awaisabir](https://github.com/awaisabir)

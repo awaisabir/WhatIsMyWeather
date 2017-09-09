@@ -20,11 +20,12 @@ class App extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		let { location, fetchWeeklyForecast, fetchCurrentForecast } = this.props
+		let { location, fetchWeeklyForecast, fetchCurrentForecast, fetchReversedGeoLocation } = this.props
 		if(prevProps.location.fetched !== location.fetched) {
 			let { latitude, longitude } = location.location
 			fetchCurrentForecast(latitude, longitude)
 			fetchWeeklyForecast(latitude, longitude)
+			fetchReversedGeoLocation(latitude, longitude)
 		}
 	}
 
@@ -36,16 +37,17 @@ class App extends Component {
 	}
 
 	weeklyForecastClickHandler(latitude, longitude) {
-		let {weeklyForecast, fetchWeeklyForecast} = this.props
+		let { weeklyForecast, fetchWeeklyForecast } = this.props
 		if (!weeklyForecast.fetched) {
 			fetchWeeklyForecast(latitude, longitude)
 		}
 	}
-	
+
 	render() {
-		let { location, currentForecast, weeklyForecast } = this.props
+		let { location, currentForecast, weeklyForecast, reversedGeoLocation } = this.props
 		let { latitude, longitude } = location.location
-		
+		let reversedLocation = reversedGeoLocation.location
+
 		return (
 			<div>
 				<Router>
@@ -73,6 +75,7 @@ class App extends Component {
 									render={() => 
 										<CurrentForecastComponent 
 											forecast={currentForecast.forecast}
+											address={reversedLocation}
 										/>
 									} 
 								/>
@@ -92,8 +95,7 @@ class App extends Component {
 									}
 									mapElement={
 										<div style={{ height: `250px` }} />
-									}
-								/> :
+									}/> :
 								<div>
 									<div className="spinner">
 										<div className="double-bounce1"></div>
