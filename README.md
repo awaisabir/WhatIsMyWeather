@@ -15,6 +15,5 @@ A simple app which tells you your weather or 5-day forecast.
 
 ## Current Status
 Vanilla JS version (v1) completed.
-  - Rewriting the application in ReactJS (v2)
 
 ### Created by [@awaisabir](https://github.com/awaisabir)
