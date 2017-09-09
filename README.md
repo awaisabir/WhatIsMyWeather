@@ -14,7 +14,6 @@ A simple app which tells you the current weather conditions or weekly forecast b
   - Bulma
 
 ## Current Status
-Under Construction :zap:
-  - Have to get icons on Weekly Forecast
+Completed (unless new feature thought of) :zap: :sparkles:
 
 ### Created by [@awaisabir](https://github.com/awaisabir)
