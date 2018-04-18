@@ -1,5 +1,7 @@
 ![What's My Weather?](app.png?raw=true "What is My Weather?")
 
+Hosted on heroku @ [whatismyweather](https://awais-whatismyweather.herokuapp.com)
+
 # What's your current weather? ..
 
 A simple app which tells you the current weather conditions or weekly forecast based on your location.
