@@ -1,5 +1,5 @@
 const CONFIG = {
-    API_KEY: '2f2edaafd5be93fcb0db882a4c5313e5'
+    API_KEY: 'place key here'
 }
 
 export default CONFIG
